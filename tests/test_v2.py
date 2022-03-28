@@ -30,7 +30,16 @@ def test_create_local():
         footer="hello",
     )
     assert token is not None
-
+    
+def test_create_local_without_footer():
+    test_v2_local_key = ProtocolVersion2.generate_symmetric_key()
+    token = paseto.create(
+        key=test_v2_local_key,
+        claims={"test": [1, 2, 3]},
+        purpose="local",
+        exp_seconds=100,
+    )
+    assert token is not None
 
 def test_key_gen():
     symmetric = ProtocolVersion2.generate_symmetric_key()
