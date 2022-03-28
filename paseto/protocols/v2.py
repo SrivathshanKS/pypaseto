@@ -6,6 +6,7 @@ from paseto.helpers import (
     validate_and_remove_footer,
     remove_footer,
     PasetoMessage,
+    _extract_footer_unsafe
 )
 from paseto.exceptions import *
 from .protocol import Protocol
@@ -72,7 +73,7 @@ class ProtocolVersion2(Protocol):
             )
 
         if footer is None:
-            data, footer = extract_footer(data)
+            data, footer = _extract_footer_unsafe(data)
         else:
             data = validate_and_remove_footer(data, footer)
 
@@ -108,7 +109,7 @@ class ProtocolVersion2(Protocol):
                 "The given key is not intended for this version of PASETO."
             )
         if footer is None:
-            footer = extract_footer(sign_msg)
+            footer = _extract_footer_unsafe(sign_msg)
         else:
             sign_msg = validate_and_remove_footer(sign_msg, footer)
 
